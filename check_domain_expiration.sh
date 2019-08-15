@@ -108,6 +108,18 @@ check_domain()
 	then
 		EXDATE=$(${WHOIS} -h whois.nic.cz "${1}" | ${AWK} '/expire:/ { gsub("[.]","/",$2); print $2 }')
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+        elif [ "$DTYPE" == "news" ]
+        then
+                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/ { gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
+                EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+        elif [ "$DTYPE" == "live" ]
+        then
+                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/ { gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
+                EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+        elif [ "$DTYPE" == "xyz" ]
+        then
+                EXDATE=$(${WHOIS} -h whois.nic.art "${1}" | ${AWK} '/Registry Expiry Date:/ { gsub("[:.]","-"); print $4 }' | cut -d 'T' -f1)
+                EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	else
 		echo "UNKNOWN - "$DTYPE" unsupported"
 		exit 3

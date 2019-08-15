@@ -38,6 +38,9 @@ Supported Top-level Domains
 * asia
 * art
 * cz
+* xyz
+* live
+* news
 
 License
 -------
