@@ -41,6 +41,9 @@ Supported Top-level Domains
 * xyz
 * live
 * news
+* world
+* tech
+* net
 
 License
 -------

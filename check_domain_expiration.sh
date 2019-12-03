@@ -32,7 +32,8 @@ check_domain()
 	if [ "$DTYPE" == "com" ]
 	then
 		# "=${1}" because of many possibilities - check out google.com with "whois google.com"
-		EXDATE_TMP=$(${WHOIS} -h whois.internic.com "=${1}" | ${AWK} '/Registry Expiry Date:/ { print $4 }' | cut -c 1-16)
+		EXDATE_TMP=$(${WHOIS} -h whois.internic.com "=${1}" | ${AWK} '/Registry Expiry Date:/ { print $
+4 }' | cut -c 1-16)
 		EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "se" ] || [ "$DTYPE" == "nu"  ]
@@ -47,17 +48,20 @@ check_domain()
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "org" ]
 	then
-		EXDATE_TMP=$(${WHOIS} -h whois.pir.org "${1}" | ${AWK} '/Expiry Date:/ { print $4 }' | cut -c 1-16)
+		EXDATE_TMP=$(${WHOIS} -h whois.pir.org "${1}" | ${AWK} '/Expiry Date:/ { print $4 }' | cut -c 1
+-16)
 		EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "info" ]
 	then
-		EXDATE_TMP=$(${WHOIS} -h whois.afilias.info "${1}" | ${AWK} '/Expiry Date:/ { print $4 }' | cut -c 1-16)
+		EXDATE_TMP=$(${WHOIS} -h whois.afilias.info "${1}" | ${AWK} '/Expiry Date:/ { print $4 }' | cut
+ -c 1-16)
 		EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "net" ]
 	then
-		EXDATE_TMP=$(${WHOIS} -h whois.verisign-grs.com "${1}" | ${AWK} '/Registry Expiry Date:/ { print $4 }' | cut -c 1-16)
+		EXDATE_TMP=$(${WHOIS} -h whois.verisign-grs.com "${1}" | ${AWK} '/Registry Expiry Date:/ { prin
+t $4 }' | cut -c 1-16)
 		EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "center" ]
@@ -72,7 +76,8 @@ check_domain()
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "me" ]
 	then
-		EXDATE_TMP=$(${WHOIS} -h whois.nic.me "${1}" | ${AWK} '/Registry Expiry Date:/ { print $4 }' | cut -c 1-16)
+		EXDATE_TMP=$(${WHOIS} -h whois.nic.me "${1}" | ${AWK} '/Registry Expiry Date:/ { print $4 }' |
+cut -c 1-16)
 		EXDATE=`date -d"$EXDATE_TMP" +%Y-%m-%d`
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "su" ]
@@ -94,14 +99,16 @@ check_domain()
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "art" ]
 	then
-		EXDATE=$(${WHOIS} -h whois.nic.art "${1}" | ${AWK} '/Registry Expiry Date:/ { gsub("[:.]","-"); print $4 }' | cut -d 'T' -f1)
+		EXDATE=$(${WHOIS} -h whois.nic.art "${1}" | ${AWK} '/Registry Expiry Date:/ { gsub("[:.]","-");
+ print $4 }' | cut -d 'T' -f1)
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "pl" ]
 	then
 		EXDATE=$(${WHOIS} "${1}" | ${AWK} '/renewal date:/ { gsub("[:.]","-"); print $3 }')
 		if [ -z "$EXDATE" ]
 		then
-			EXDATE=$(${WHOIS} -h whois.dns.pl "${1}" | ${AWK} '/expiration date:/ { gsub("[:.]","-"); print $3 }')
+			EXDATE=$(${WHOIS} -h whois.dns.pl "${1}" | ${AWK} '/expiration date:/ { gsub("[:.]","-"
+); print $3 }')
 		fi
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	elif [ "$DTYPE" == "cz" ]
@@ -110,15 +117,33 @@ check_domain()
 		EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
         elif [ "$DTYPE" == "news" ]
         then
-                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/ { gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
+                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/
+{ gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
                 EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
         elif [ "$DTYPE" == "live" ]
         then
-                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/ { gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
+                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/
+{ gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
                 EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
         elif [ "$DTYPE" == "xyz" ]
         then
-                EXDATE=$(${WHOIS} -h whois.nic.art "${1}" | ${AWK} '/Registry Expiry Date:/ { gsub("[:.]","-"); print $4 }' | cut -d 'T' -f1)
+                EXDATE=$(${WHOIS} -h whois.nic.art "${1}" | ${AWK} '/Registry Expiry Date:/ { gsub("[:.]","-");
+ print $4 }' | cut -d 'T' -f1)
+                EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+        elif [ "$DTYPE" == "world" ]
+        then
+                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/
+{ gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
+                EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+        elif [ "$DTYPE" == "tech" ]
+        then
+                EXDATE=$(${WHOIS} -h whois.name.com "${1}" | ${AWK} '/Registrar Registration Expiration Date:/
+{ gsub("[:.]","-"); print $5 }' | cut -d 'T' -f1)
+                EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
+        elif [ "$DTYPE" == "net" ]
+        then
+                EXDATE=$(${WHOIS} -h grs-whois.cndns.com "${1}" | ${AWK} '/Registry Expiry Date:/ { gsub("[:.]"
+,"-"); print $4 }' | cut -d 'T' -f1)
                 EXP_DAYS=$(( ( $(date -ud ${EXDATE} +'%s') - $(date -ud `date +%Y-%m-%d` +'%s') )/60/60/24 ))
 	else
 		echo "UNKNOWN - "$DTYPE" unsupported"
